@@ -1,2 +1,5 @@
-#!/bin/bash
+#!/bin/sh -e
+
+set -x
+
 poetry run pytest -x -s

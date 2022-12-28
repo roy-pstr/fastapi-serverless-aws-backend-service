@@ -40,23 +40,28 @@ poetry install
 ```
 
 ```
-4. Run local code analysis
+
+4. Set access permmisions to scripts directory
 ```
-poetry run pytest
+chmod 777 ./scripts
 ```
 
-4. Run local tests
+5. Run local code analysis
 ```
-chmod 777 ./scripts/test # only once
+./scripts/check
+```
+
+6. Run local tests
+```
 ./scripts/test
 ```
 
-5. Run local server
+7. Run local server
 ```
 poetry run uvicorn ...
 ```
 
-6. Deploy to AWS
+8. Deploy to AWS
 ```
 sls deploy
 ```
