@@ -13,11 +13,12 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - Automatic HTTPS with AWS Certificate Manager
 - Basic authentication and authorization with Auth0
 - Automated testing and deployment with GitHub Actions
+- Multiple deployment environments (develop, staging, production) supported for testing and staging purposes.
 
 ## Prerequisites
 - An AWS account
 - The [AWS CLI](https://aws.amazon.com/cli/) installed and configured
-- [Python 3.7 or later](https://www.python.org/downloads/)
+- [Python 3.7.2 or later](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/) for managing dependencies and packaging the app
 - [npm](https://www.npmjs.com/) for installing the serverless framework and plugings
 - [serverless](https://www.serverless.com/) framework for deploying the backend (just run `npm install -g serverless`)
@@ -38,7 +39,7 @@ poetry install
 
 3. Set up local environment in `.env` file
 ```
-
+TBA
 ```
 
 4. Set access permmisions to scripts directory
@@ -63,7 +64,7 @@ chmod 777 ./scripts/*
 
 8. Deploy to AWS
 ```
-sls deploy
+./scripts/deploy
 ```
 
 ## Contributing
