@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from sys import path
 
@@ -18,7 +19,7 @@ async def root():
     """
     Get / endpoint
     """
-    running_on_aws_lambda = False
+    running_on_aws_lambda = os.environ.get("AWS_EXECUTION_ENV") is not None
     message = "Hello from your backend service"
     if running_on_aws_lambda:
         message += " running on AWS Lambda!"
