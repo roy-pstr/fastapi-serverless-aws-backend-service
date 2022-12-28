@@ -18,8 +18,14 @@ async def root():
     """
     Get / endpoint
     """
+    running_on_aws_lambda = False
+    message = "Hello from your backend service"
+    if running_on_aws_lambda:
+        message += " running on AWS Lambda!"
+    else:
+        message += " running on your local machine!"
     return {
-        "message": "Hello from your backend service running on AWS Lambda!",
+        "message": message,
     }
 
 
