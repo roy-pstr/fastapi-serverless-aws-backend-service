@@ -19,8 +19,8 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - The [AWS CLI](https://aws.amazon.com/cli/) installed and configured
 - [Python 3.7 or later](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/) for managing dependencies and packaging the app
-- [serverless](https://www.serverless.com/) framework for deploying the backend
 - [npm](https://www.npmjs.com/) for installing the serverless framework and plugings
+- [serverless](https://www.serverless.com/) framework for deploying the backend (just run `npm install -g serverless`)
 - [Docker](https://www.docker.com/) for building and testing the app locally
 
 ## Getting Started
@@ -47,7 +47,8 @@ poetry run pytest
 
 4. Run local tests
 ```
-poetry run pytest
+chmod 777 ./scripts/test # only once
+./scripts/test
 ```
 
 5. Run local server

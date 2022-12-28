@@ -14,6 +14,7 @@ mangum = "^0.17.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"
+mypy = "^0.991"
 
 [build-system]
 requires = ["poetry-core"]
