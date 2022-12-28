@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+export PATH_TO_MAIN="src.main"
+
+set -x
+
+poetry run uvicorn ${PATH_TO_MAIN}:app --reload

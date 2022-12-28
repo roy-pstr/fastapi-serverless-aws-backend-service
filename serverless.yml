@@ -1,0 +1,89 @@
+service: FastAPIBackendService
+
+useDotenv: true # If set to 'true', environment variables will be automatically loaded from .env files
+
+package:
+  individually: true
+
+# plugins:
+  # - serverless-domain-manager
+  # - serverless-offline
+  # - serverless-plugin-lambda-insights
+  # - serverless-plugin-log-retention
+
+# custom:
+#   dev:
+#     domainNameCondition: api-dev.larium.ai
+#   staging:
+#     domainNameCondition: api-staging.larium.ai
+#   prod:
+#     domainNameCondition: api.larium.ai
+
+#   customDomain: # https://github.com/amplify-education/serverless-domain-manager
+#     domainName: ${self:custom.${self:provider.stage}.domainNameCondition}
+#     stage: ${self:provider.stage}
+#     basePath: "" # For some reason can not work with api mapping
+#     certificateArn: ${env:ACM_ARN}
+#     createRoute53Record: true
+#     endpointType: edge
+#     securityPolicy: tls_1_2
+#     apiType: rest
+#     autoDomain: false
+
+provider:
+  name: aws
+  profile: ${opt:aws-profile, "default"}
+  region: ${env:AWS_REGION_NAME, "eu-central-1"}
+  stage: ${opt:stage, "dev"}
+  runtime: python3.9
+  memorySize: 1024 # MB
+  timeout: 30
+  endpointType: edge
+  lambdaHashingVersion: 20201221
+  # apiGateway:
+  #   metrics: true
+  # tracing:
+  #   apiGateway: true
+  logs:
+    restApi: true
+  ecr:
+    # In this section you can define images that will be built locally and uploaded to ECR
+    images:
+      fastapi-backend-server:
+        path: .
+        # Dockerfile that will be used when building the image locally (default: 'Dockerfile'), relative to path defined above
+        file: Dockerfile
+        cacheFrom:
+          # This is the path where the serverless framework will put the image in ECR when created for the first time.
+          - ${AWS::AccountId}.dkr.ecr.${self:provider.region}.amazonaws.com/serverless-fastapibackendservice-${self:provider.stage}:fastapi-backend-server
+  iamRoleStatements:  # handles the permissions of the lambda
+    # XRay
+    # - Effect: Allow
+    #   Action:
+    #     - xray:PutTraceSegments
+    #     - xray:PutTelemetryRecords
+    #     - xray:GetSamplingRules
+    #     - xray:GetSamplingTargets
+    #     - xray:GetSamplingStatisticSummaries
+    #   Resource: "*"
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: "*"
+
+functions:
+  app:
+    image:
+      name: fastapi-backend-server
+    environment:
+      STAGE: ${self:provider.stage}
+
+    events:
+      - http:
+          method: any
+          path: /
+      - http:
+          method: any
+          path: /{proxy+}

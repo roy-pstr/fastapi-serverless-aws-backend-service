@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fastapi-serverless-aws-baceknd-service"
+name = "fastapi-serverless-aws-backend-service"
 version = "0.1.0"
 description = "Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework and deploying it to AWS using serverless technology"
 authors = ["Roy Pasternak <roy@larium.ai>"]

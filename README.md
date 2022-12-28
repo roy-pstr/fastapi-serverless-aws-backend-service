@@ -43,7 +43,7 @@ poetry install
 
 4. Set access permmisions to scripts directory
 ```
-chmod 777 ./scripts
+chmod 777 ./scripts/*
 ```
 
 5. Run local code analysis
@@ -58,7 +58,7 @@ chmod 777 ./scripts
 
 7. Run local server
 ```
-poetry run uvicorn ...
+./scripts/start
 ```
 
 8. Deploy to AWS
