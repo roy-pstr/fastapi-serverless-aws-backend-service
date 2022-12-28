@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "fastapi-serverless-aws-baceknd-service"
+version = "0.1.0"
+description = "Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework and deploying it to AWS using serverless technology"
+authors = ["Roy Pasternak <roy@larium.ai>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "fastapi_serverless_aws_baceknd_service"}]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
