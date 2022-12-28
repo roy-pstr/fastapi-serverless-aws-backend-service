@@ -5,6 +5,7 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - Built with FastAPI, a modern, fast, and easy-to-use web framework for building APIs with Python
 - Uses AWS Lambda, ECR and API Gateway to deploy the serverless backend
 - Easy to deploy with the serverless framework
+- Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
 
 ## Future Features
 - Support in API versions
@@ -12,7 +13,6 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - Automatic HTTPS with AWS Certificate Manager
 - Basic authentication and authorization with Auth0
 - Automated testing and deployment with GitHub Actions
-- Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
 
 ## Prerequisites
 - An AWS account
