@@ -12,7 +12,7 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - Automatic HTTPS with AWS Certificate Manager
 - Basic authentication and authorization with Auth0
 - Automated testing and deployment with GitHub Actions
-- Code quality ensured with static analysis tools Black, Mypy, and Pylint
+- Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
 
 ## Prerequisites
 - An AWS account

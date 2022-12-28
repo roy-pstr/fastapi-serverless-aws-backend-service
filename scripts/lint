@@ -5,6 +5,6 @@ export SOURCE_FILES="src"
 
 set -x
 
-# ${PREFIX}autoflake --in-place --recursive $SOURCE_FILES
+${PREFIX}autoflake --in-place --recursive --ignore-init-module-imports --remove-all-unused-imports $SOURCE_FILES
 ${PREFIX}isort $SOURCE_FILES
 ${PREFIX}black $SOURCE_FILES
