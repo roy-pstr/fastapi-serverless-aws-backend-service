@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+export PREFIX="poetry run "
+export SOURCE_FILES="src"
+
+set -x
+
+# ${PREFIX}autoflake --in-place --recursive $SOURCE_FILES
+${PREFIX}isort $SOURCE_FILES
+${PREFIX}black $SOURCE_FILES
