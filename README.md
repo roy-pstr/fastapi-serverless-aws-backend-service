@@ -4,9 +4,13 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 ## Features
 - Built with FastAPI, a modern, fast, and easy-to-use web framework for building APIs with Python
 - Uses AWS Lambda, ECR and API Gateway to deploy the serverless backend
+- Easy to deploy with the serverless framework
+
+## Future Features
+- Support in API versions
+- Support in caching using FastAPI_Cache
 - Automatic HTTPS with AWS Certificate Manager
 - Basic authentication and authorization with Auth0
-- Easy to deploy with the serverless framework
 - Automated testing and deployment with GitHub Actions
 - Code quality ensured with static analysis tools Black, Mypy, and Pylint
 
@@ -61,3 +65,10 @@ We welcome contributions to this project! If you have an idea for a new feature 
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Tips
+### Set python interpreter in VScode
+- Run `poetry run which python` and copy the python path
+- `command+shift+p` to open the VScode command shortcuts and enter `Python: Select Interpreter`
+- Select `+ Enter interpreter path...` and paste the python path
+- That's it.
