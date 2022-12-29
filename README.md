@@ -39,8 +39,10 @@ poetry install
 ```
 
 3. Set up local environment in `.env` file
+- Create teh file: `touch .env`
+- Set the following values inside:
 ```
-ACM_ARN=<AWS Certificate ARN for your domain>
+
 ```
 
 4. Set access permissions to scripts directory
