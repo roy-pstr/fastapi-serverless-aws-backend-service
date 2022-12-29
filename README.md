@@ -2,15 +2,15 @@
 Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework and deploying it to AWS using serverless technology.
 
 ## Features
-- Built with FastAPI, a modern, fast, and easy-to-use web framework for building APIs with Python
+- Built with *FastAPI*, a modern, fast, and easy-to-use web framework for building APIs with Python
 - Uses AWS Lambda, ECR and API Gateway to deploy the serverless backend
 - Easy to deploy with the serverless framework
 - Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
+- Domain management for each deployment stage using AWS Certificate Manager, AWS Route53, and the serverless domain manager plugin.
 
 ## Future Features
 - Support in API versions
 - Support in caching using FastAPI_Cache
-- Automatic HTTPS with AWS Certificate Manager
 - Basic authentication and authorization with Auth0
 - Automated testing and deployment with GitHub Actions
 - Multiple deployment environments (develop, staging, production) supported for testing and staging purposes.
@@ -23,6 +23,7 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - [npm](https://www.npmjs.com/) for installing the serverless framework and plugings
 - [serverless](https://www.serverless.com/) framework for deploying the backend (just run `npm install -g serverless`)
 - [Docker](https://www.docker.com/) for building and testing the app locally
+- An AWS Certificate of SSL/TLS certificate for a domain name in the AWS Certificate Manager ([this guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains-prerequisites.html) can help)
 
 ## Getting Started
 1. Clone the repository
@@ -39,10 +40,10 @@ poetry install
 
 3. Set up local environment in `.env` file
 ```
-TBA
+ACM_ARN=<AWS Certificate ARN for your domain>
 ```
 
-4. Set access permmisions to scripts directory
+4. Set access permissions to scripts directory
 ```
 chmod 777 ./scripts/*
 ```

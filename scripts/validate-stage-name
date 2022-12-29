@@ -1,0 +1,17 @@
+#!/bin/sh -e
+ENVIRONMENTS=("dev" "staging" "prod")
+STAGE=$1
+# validate STAGE value
+found=0
+for env_name in "${ENVIRONMENTS[@]}"
+do
+    if [ "$env_name" = "$STAGE" ] ; then
+        found=1
+        break
+    fi
+done
+if [[ $found -eq 0 ]]
+then
+    echo "$STAGE is not a valid environment name."
+    exit 1
+fi

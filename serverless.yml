@@ -5,30 +5,31 @@ useDotenv: true # If set to 'true', environment variables will be automatically 
 package:
   individually: true
 
-# plugins:
-  # - serverless-domain-manager
+plugins:
+  - serverless-domain-manager
   # - serverless-offline
   # - serverless-plugin-lambda-insights
   # - serverless-plugin-log-retention
 
-# custom:
-#   dev:
-#     domainNameCondition: api-dev.larium.ai
-#   staging:
-#     domainNameCondition: api-staging.larium.ai
-#   prod:
-#     domainNameCondition: api.larium.ai
+custom:
+  baseDomain: larium.ai
+  dev:
+    domainNameCondition: api-develop.${self:custom.baseDomain}
+  staging:
+    domainNameCondition: api-staging.${self:custom.baseDomain}
+  prod:
+    domainNameCondition: api.${self:custom.baseDomain}
 
-#   customDomain: # https://github.com/amplify-education/serverless-domain-manager
-#     domainName: ${self:custom.${self:provider.stage}.domainNameCondition}
-#     stage: ${self:provider.stage}
-#     basePath: "" # For some reason can not work with api mapping
-#     certificateArn: ${env:ACM_ARN}
-#     createRoute53Record: true
-#     endpointType: edge
-#     securityPolicy: tls_1_2
-#     apiType: rest
-#     autoDomain: false
+  customDomain: # https://github.com/amplify-education/serverless-domain-manager
+    domainName: ${self:custom.${self:provider.stage}.domainNameCondition}
+    stage: ${self:provider.stage}
+    basePath: "" # For some reason can not work with api mapping
+    certificateArn: ${env:ACM_ARN}
+    createRoute53Record: true
+    endpointType: edge
+    securityPolicy: tls_1_2
+    apiType: rest
+    autoDomain: false
 
 provider:
   name: aws

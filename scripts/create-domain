@@ -11,6 +11,7 @@ fi
 #validate STAGE name
 $(dirname "$0")/validate-stage-name $STAGE
 
+
 set -x
 
-serverless remove --stage $STAGE
+serverless create_domain --stage $STAGE

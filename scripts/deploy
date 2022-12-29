@@ -1,5 +1,16 @@
 #!/bin/sh -e
 
+# parse STAGE from command line, by defualt it is dev
+if [ -z "$1" ]
+then
+    STAGE='dev'
+else
+    STAGE=$1
+fi
+
+#validate STAGE name
+$(dirname "$0")/validate-stage-name $STAGE
+
 set -x
 
-sls deploy
+serverless deploy --stage $STAGE
