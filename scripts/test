@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+if [ -z $GITHUB_ACTIONS ]; then
+    $(dirname "$0")/check
+fi
+
 set -x
 
 poetry run pytest -x -s
