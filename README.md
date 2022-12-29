@@ -41,11 +41,11 @@ poetry install
 - Create the file: `touch .env`
 - Set the following values inside:
 ```
-
+TBA
 ```
 
 4. Set access permissions to scripts directory
-```
+```bash
 chmod 777 ./scripts/*
 ```
 
