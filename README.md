@@ -39,7 +39,7 @@ poetry install
 ```
 
 3. Set up local environment in `.env` file
-- Create teh file: `touch .env`
+- Create the file: `touch .env`
 - Set the following values inside:
 ```
 
