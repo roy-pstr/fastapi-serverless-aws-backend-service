@@ -9,7 +9,7 @@ plugins:
   - serverless-domain-manager
   # - serverless-offline
   # - serverless-plugin-lambda-insights
-  # - serverless-plugin-log-retention
+  - serverless-plugin-log-retention
 
 custom:
   baseDomain: larium.ai
@@ -30,6 +30,8 @@ custom:
     securityPolicy: tls_1_2
     apiType: rest
     autoDomain: false
+
+  logRetentionInDays: 30 # This is to make sure that your cloudwatch log storage will stay in a reasonable size (it can get pretty expensive...)
 
 provider:
   name: aws

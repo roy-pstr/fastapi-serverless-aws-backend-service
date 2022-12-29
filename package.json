@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework and deploying it to AWS using serverless technology",
   "dependencies": {
-    "serverless-domain-manager": "^6.2.1"
+    "serverless-domain-manager": "^6.2.1",
+    "serverless-plugin-log-retention": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
