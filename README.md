@@ -7,7 +7,6 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - Easy to deploy with the serverless framework
 - Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
 - Domain management for each deployment stage using AWS Certificate Manager, AWS Route53, and the serverless domain manager plugin.
-- Support in API versions
 
 ## Future Features
 - Support in caching using FastAPI_Cache
