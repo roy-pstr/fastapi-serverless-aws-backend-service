@@ -9,6 +9,7 @@ from mangum import Mangum
 from src.api.v1.app import app as app_v1
 from src.api.v2.app import app as app_v2
 
+
 # fix the import path when the script is being called from pytest.
 rootDir = Path(__file__).resolve().parent
 path.append(str(rootDir))
@@ -17,6 +18,7 @@ app = FastAPI(docs_url=None)  # hide docs
 
 app.mount("/v1", app_v1)
 app.mount("/v2", app_v2)
+
 
 @app.get("/")
 async def root():
