@@ -23,7 +23,7 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - [npm](https://www.npmjs.com/) for installing the serverless framework and plugings
 - [serverless](https://www.serverless.com/) framework for deploying the backend (just run `npm install -g serverless`)
 - [Docker](https://www.docker.com/) for building and testing the app locally
-- An AWS Certificate of SSL/TLS certificate for a domain name in the AWS Certificate Manager ([this guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains-prerequisites.html) can help)
+- (Optional) An AWS Certificate of SSL/TLS certificate for a domain name in the AWS Certificate Manager ([this guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains-prerequisites.html) can help)
 
 ## Getting Started
 1. Clone the repository
