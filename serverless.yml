@@ -12,24 +12,25 @@ plugins:
   - serverless-plugin-log-retention
 
 custom:
-  baseDomain: larium.ai
-  dev:
-    domainNameCondition: api-develop.${self:custom.baseDomain}
-  staging:
-    domainNameCondition: api-staging.${self:custom.baseDomain}
-  prod:
-    domainNameCondition: api.${self:custom.baseDomain}
+  # COMMENT OUT THIS IF YOU WANT TO USE CUSTOM DOMAIN
+  # baseDomain: your.domain
+  # dev:
+  #   domainNameCondition: api-develop.${self:custom.baseDomain}
+  # staging:
+  #   domainNameCondition: api-staging.${self:custom.baseDomain}
+  # prod:
+  #   domainNameCondition: api.${self:custom.baseDomain}
 
-  customDomain: # https://github.com/amplify-education/serverless-domain-manager
-    domainName: ${self:custom.${self:provider.stage}.domainNameCondition}
-    stage: ${self:provider.stage}
-    basePath: "" # For some reason can not work with api mapping
-    certificateArn: ${env:ACM_ARN}
-    createRoute53Record: true
-    endpointType: edge
-    securityPolicy: tls_1_2
-    apiType: rest
-    autoDomain: false
+  # customDomain: # https://github.com/amplify-education/serverless-domain-manager
+  #   domainName: ${self:custom.${self:provider.stage}.domainNameCondition}
+  #   stage: ${self:provider.stage}
+  #   basePath: "" # For some reason can not work with api mapping
+  #   certificateArn: ${env:ACM_ARN}
+  #   createRoute53Record: true
+  #   endpointType: edge
+  #   securityPolicy: tls_1_2
+  #   apiType: rest
+  #   autoDomain: false
 
   logRetentionInDays: 30 # This is to make sure that your cloudwatch log storage will stay in a reasonable size (it can get pretty expensive...)
 

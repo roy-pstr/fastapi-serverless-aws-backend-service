@@ -63,10 +63,32 @@ chmod 777 ./scripts/*
 ./scripts/start
 ```
 
-8. Deploy to AWS
+8. (Optional) If you want to use a custom domain for the backend, follow these steps:
+- Obtain an ARN of AWS Certificate for your domain in the AWS Certificate Manager
+- Set it on the `.env` file in `ACM_ARN`
+- In `serverless.yml`, uncomment the parts under "COMMENT OUT THIS IF YOU WANT TO USE CUSTOM DOMAIN"
+- Update the value of `baseDomain` with your domain
+- Create the domain (this link a Route53 rule to the Certificate)
+```
+./scripts/create-domain
+```
+- Next time you will deploy the server will be exposed under your domain.
+
+9. Deploy to AWS
 ```
 ./scripts/deploy
 ```
+
+10. Remove deployment from AWS
+```
+./scripts/remove
+```
+
+11. (Optional) Remove the domain from Route53 (it will not remove the certificate!)
+```
+./scripts/delete-domain
+```
+
 
 ## Contributing
 We welcome contributions to this project! If you have an idea for a new feature or improvement, please open an issue or pull request.

@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# Include src code
+!src
+!pyproject.toml
+!poetry.lock
+
+# Ignore jupiter notebooks
+*.ipynb
