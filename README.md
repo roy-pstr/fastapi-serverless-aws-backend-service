@@ -6,13 +6,15 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 - Uses AWS Lambda, ECR and API Gateway to deploy the serverless backend
 - Easy to deploy with the serverless framework
 - Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
-- Domain management for each deployment stage using AWS Certificate Manager, AWS Route53, and the serverless domain manager plugin.
+- Domain management for each deployment stage using AWS Certificate Manager, AWS Route53, and the serverless domain manager plugin
+- Built-in monitoring with AWS CloudWatch for logs aggregation and AWS XRay for tracing
 
 ## Future Features
 - Support in caching using FastAPI_Cache
 - Basic authentication and authorization with Auth0
-- Automated testing and deployment with GitHub Actions
-- Multiple deployment environments (develop, staging, production) supported for testing and staging purposes.
+- Multi-stage CI/CD deployment with GitHub Actions
+- Database migration support using Alembic
+- Handling exceptions and logging
 
 ## Prerequisites
 - An AWS account
@@ -67,8 +69,8 @@ chmod 777 ./scripts/*
 8. (Optional) If you want to use a custom domain for the backend, follow these steps:
 - Obtain an ARN of AWS Certificate for your domain in the AWS Certificate Manager
 - Set it on the `.env` file in `ACM_ARN`
-- In `serverless.yml`, uncomment the parts under "COMMENT OUT THIS IF YOU WANT TO USE CUSTOM DOMAIN"
-- Update the value of `baseDomain` with your domain
+- In `serverless.yml` -> set `customDomain.enabled: true`
+- Update the value of `baseDomain` with your base domain
 - Create the domain (this link a Route53 rule to the Certificate)
 ```
 ./scripts/create-domain
