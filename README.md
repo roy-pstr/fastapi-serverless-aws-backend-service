@@ -3,7 +3,7 @@ Welcome to the FastAPI Serverless AWS Backend Server project! This project is de
 
 ## Features
 - Built with FastAPI, a modern, fast, and easy-to-use web framework for building APIs with Python
-- Highly scalable and cost-effective hosting on AWS Lambda ((defualt limit)[https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html] is a total 1,000 concurrency across all functions in a region per account)
+- Highly scalable and cost-effective hosting on AWS Lambda ([defualt limit](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html) is a total 1,000 concurrency across all functions in a region per account)
 - Easy to deploy with the serverless framework
 - Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
 - Domain management per deployment stage - just provide a AWS Certificate ARN for your base domain
