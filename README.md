@@ -1,12 +1,12 @@
 # FastAPI Serverless AWS Backend Server
-Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework and deploying it to AWS using serverless technology.
+Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework deployed on AWS lambda.
 
 ## Features
 - Built with FastAPI, a modern, fast, and easy-to-use web framework for building APIs with Python
-- Uses AWS Lambda, ECR and API Gateway to deploy the serverless backend
+- Highly scalable and cost-effective hosting on AWS Lambda ((defualt limit)[https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html] is a total 1,000 concurrency across all functions in a region per account)
 - Easy to deploy with the serverless framework
 - Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
-- Domain management for each deployment stage using AWS Certificate Manager, AWS Route53, and the serverless domain manager plugin
+- Domain management per deployment stage - just provide a AWS Certificate ARN for your base domain
 - Built-in monitoring with AWS CloudWatch for logs aggregation and AWS XRay for tracing
 
 ## Future Features
