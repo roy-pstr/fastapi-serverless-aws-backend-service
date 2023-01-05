@@ -1,6 +1,18 @@
 # FastAPI Serverless AWS Backend Server
 Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework deployed on AWS lambda.
 
+## Bottom Line
+### Deployments
+What | How (script) | Where (endpoint)
+--- | --- | --- 
+**Local** | `./scripts/start` | `http://localhost:8000`
+**Remote**|`./scripts/deploy`|`https://***.execute-api.eu-central-1.amazonaws.com/dev/`
+**Develop Domain**|`./scripts/create-domain`+`./scripts/deploy`|`https://api-develop.your.domain`
+**Staging Domain**|`./scripts/create-domain staging`+`./scripts/deploy staging`|`https://api-staging.your.domain`
+**Production Domain**|`./scripts/create-domain prod`+`./scripts/deploy prod`|`https://api.your.domain`
+### Test
+`curl --request GET "https://api-develop.larium.ai"` -> `{"message":"Hello from your backend service running on AWS Lambda!"}`
+
 ## Features
 - Built with FastAPI, a modern, fast, and easy-to-use web framework for building APIs with Python
 - Highly scalable and cost-effective hosting on AWS Lambda ([defualt limit](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html) is a total 1,000 concurrency across all functions in a region per account)
