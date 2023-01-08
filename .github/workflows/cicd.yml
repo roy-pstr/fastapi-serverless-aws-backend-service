@@ -32,18 +32,18 @@ jobs:
       uses: snok/install-poetry@v1
       with:
         version: 1.2.0b3
-        virtualenvs-create: false
+        virtualenvs-in-project: true
         installer-parallel: true
 
-    - name: Cache poetry virtualenv
+    - name: Load cached venv
+      id: cached-poetry-dependencies
       uses: actions/cache@v3
-      id: cached-python-env
       with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('poetry.lock') }}
+        path: .venv
+        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
     - name: Install python dependencies
-      if: steps.cached-python-env.outputs.cache-hit != 'true'
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       run: poetry install --no-interaction --no-root
       
     - name: Test
