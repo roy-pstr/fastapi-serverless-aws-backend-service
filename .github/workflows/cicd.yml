@@ -20,7 +20,7 @@ jobs:
       with:
         python-version: 3.9
         
-    - name: Load cached Poetry installation
+    - name: Cache Poetry installation
       id: cached-poetry
       uses: actions/cache@v3
       with:
@@ -34,9 +34,22 @@ jobs:
         version: 1.2.0b3
         virtualenvs-create: false
         installer-parallel: true
-    
+
+    - name: Cache poetry virtualenv
+      uses: actions/cache@v3
+      id: cached-python-env
+      with:
+        path: ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('poetry.lock') }}
+
     - name: Install python dependencies
+      if: steps.cached-python-env.outputs.cache-hit != 'true'
       run: poetry install --no-interaction --no-root
       
     - name: Test
       run: poetry run pytest
+
+    - name: Install NodeJS for serverless framework
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14.x'
