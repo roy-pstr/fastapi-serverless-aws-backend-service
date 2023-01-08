@@ -25,7 +25,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.local  # the path depends on the OS
-        key: poetry-0  # increment to reset cache
+        key: poetry-cache-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.POETRY_VERSION }}
 
     - name: Install Poetry
       if: steps.cached-poetry.outputs.cache-hit != 'true'
@@ -40,7 +40,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: .venv
-        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+        key: venv-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('**/poetry.lock') }}
 
     - name: Install python dependencies
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
