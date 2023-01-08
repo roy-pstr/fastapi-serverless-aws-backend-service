@@ -61,4 +61,5 @@ jobs:
       run: npm ci
 
     - name: Deploy
-      run: serverless deploy
+      run: echo "Deploy your service here!"
+      # run: serverless deploy
