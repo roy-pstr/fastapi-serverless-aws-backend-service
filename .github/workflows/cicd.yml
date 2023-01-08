@@ -15,6 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install poetry
+      run: pip install poetry==1.2.0b3
+
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
