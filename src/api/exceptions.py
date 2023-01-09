@@ -2,9 +2,10 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+
 router = APIRouter()
 
-    
+
 @router.get("/http_exception")
 async def httpexception():
     """
@@ -14,6 +15,7 @@ async def httpexception():
         status_code=500,
         detail="StarletteHTTPException raised from inside the endpoint.",
     )
+
 
 @router.get("/type_validation_exception/{value}")
 async def type_validation(value: int):

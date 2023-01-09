@@ -17,7 +17,8 @@ async def measure_time(request: Request, call_next):
         f"{request.client.host}:{request.client.port} - {request.method} {url} {response.status_code} {formatted_process_time}ms"
     )
     return response
-    
+
+
 async def handle_unhandled_exceptions(request: Request, call_next):
     """
     This middleware will log all unhandled exceptions.

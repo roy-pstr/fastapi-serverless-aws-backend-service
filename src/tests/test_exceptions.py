@@ -1,4 +1,3 @@
-
 def test_exceptions(client):
     """
     Tests all error handling sceneries that can occur in the application.
@@ -6,7 +5,7 @@ def test_exceptions(client):
     # HTTPException triggered by business logic.
     response = client.get("/exceptions/http_exception")
     assert response.status_code == 500
-    assert response.json().get('detail') == "StarletteHTTPException raised from inside the endpoint."
+    assert response.json().get("detail") == "StarletteHTTPException raised from inside the endpoint."
 
     # ValidationError triggered by FastAPI type validation.
     response = client.get("/exceptions/type_validation_exception/5")
