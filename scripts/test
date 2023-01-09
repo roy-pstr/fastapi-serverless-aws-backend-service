@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-if [ -z $GITHUB_ACTIONS ]; then
+if [[ -z "$GITHUB_ACTIONS" && "$1" != "--only" ]]; then
     $(dirname "$0")/check
 fi
 

@@ -6,6 +6,7 @@ from sys import path
 from fastapi import FastAPI
 from mangum import Mangum
 
+from src.api.health import router as health_router
 from src.api.v1.app import app as app_v1
 from src.api.v2.app import app as app_v2
 
@@ -14,11 +15,15 @@ from src.api.v2.app import app as app_v2
 rootDir = Path(__file__).resolve().parent
 path.append(str(rootDir))
 
-app = FastAPI(docs_url=None)  # hide docs
 
-app.mount("/v1", app_v1)
-app.mount("/v2", app_v2)
+def create_application() -> FastAPI:
+    app = FastAPI(docs_url=None)  # hide docs
+    app.include_router(health_router, prefix="/ping", tags=["ping"])
+    app.mount("/v1", app_v1)
+    app.mount("/v2", app_v2)
+    return app
 
+app: FastAPI = create_application()
 
 @app.get("/")
 async def root():
