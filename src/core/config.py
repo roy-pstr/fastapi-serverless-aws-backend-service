@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import List
 
 from pydantic import BaseSettings
 
@@ -9,6 +10,8 @@ class Settings(BaseSettings):
     """
 
     LOGGER_LEVEL: str = "INFO"
+
+    ALLOWED_HOSTS: List[str] = ["*"]
 
     class Config:
         """
