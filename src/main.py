@@ -20,19 +20,22 @@ path.append(str(rootDir))
 
 
 def create_application() -> FastAPI:
-    app = FastAPI(docs_url=None)  # hide docs
+    """
+    Create the FastAPI application
+    """
+    application = FastAPI(docs_url=None)  # hide docs
 
     # add routers
-    app.include_router(health_router, prefix="/ping", tags=["ping"])
-    app.include_router(exceptions_router, prefix="/exceptions", tags=["exceptions"])
+    application.include_router(health_router, prefix="/ping", tags=["ping"])
+    application.include_router(exceptions_router, prefix="/exceptions", tags=["exceptions"])
 
-    app.add_middleware(BaseHTTPMiddleware, dispatch=handle_unhandled_exceptions)
+    application.add_middleware(BaseHTTPMiddleware, dispatch=handle_unhandled_exceptions)
 
     # mount sub-apps
-    app.mount("/v1", app_v1)
-    app.mount("/v2", app_v2)
+    application.mount("/v1", app_v1)
+    application.mount("/v2", app_v2)
 
-    return app
+    return application
 
 
 app: FastAPI = create_application()

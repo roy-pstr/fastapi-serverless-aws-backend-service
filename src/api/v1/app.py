@@ -3,11 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 def create_application() -> FastAPI:
-
-    app = FastAPI()
+    """
+    Create the FastAPI application
+    """
+    application = FastAPI()
 
     # CORS
-    app.add_middleware(
+    application.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
         allow_credentials=True,
@@ -15,7 +17,7 @@ def create_application() -> FastAPI:
         allow_headers=["*"],
     )
 
-    return app
+    return application
 
 
 app: FastAPI = create_application()
