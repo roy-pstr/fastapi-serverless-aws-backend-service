@@ -7,7 +7,8 @@ class Settings(BaseSettings):
     """
     Settings for the FastAPI server.
     """
-
+    LOGGER_LEVEL: str = "INFO"
+    
     class Config:
         """
         Tell BaseSettings the env file path
