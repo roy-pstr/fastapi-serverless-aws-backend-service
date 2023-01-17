@@ -76,15 +76,17 @@ jobs:
       with:
         node-version: '14.x'
         cache: 'npm'
-    - name: Cache global serverless installation
-      id: cached-serverless
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm  # the path depends on the OS
-        key: serverless-cache-${{ runner.os }}-version-${{ env.SERVERLESS_VERSION }}
+    # - name: Cache global serverless installation
+    #   id: cached-serverless
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: ~/node_modules # the path depends on the OS
+    #     key: serverless-cache-${{ runner.os }}-version-${{ env.SERVERLESS_VERSION }}
     - name: Install serverless framework
-      if: steps.cached-serverless.outputs.cache-hit != 'true'
-      run: npm i -g serverless@${{env.SERVERLESS_VERSION}}
+      # if: steps.cached-serverless.outputs.cache-hit != 'true'
+      run: |
+        npm i -g serverless@${{env.SERVERLESS_VERSION}}
+        which serverless
     - name: Install serverless plugins
       run: npm ci
     - name: Configure AWS account
