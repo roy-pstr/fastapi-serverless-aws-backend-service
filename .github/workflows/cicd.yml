@@ -68,6 +68,7 @@ jobs:
       # run: serverless deploy
 
   deploy:
+    needs: test
     runs-on: ubuntu-20.04
 
     steps:
