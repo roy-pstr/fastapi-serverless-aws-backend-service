@@ -52,21 +52,6 @@ jobs:
     - name: Tests
       run: poetry run pytest
 
-    - name: Install NodeJS for serverless framework
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14.x'
-      
-    - name: Install serverless framework
-      run: npm i -g serverless
-
-    - name: Install serverless plugins
-      run: npm ci
-
-    - name: Deploy
-      run: echo "Deploy your service here!"
-      # run: serverless deploy
-
   deploy:
     needs: test
     runs-on: ubuntu-20.04
