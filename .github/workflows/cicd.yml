@@ -80,7 +80,7 @@ jobs:
     - name: AWS ECR Login
       env:
         AWS_ACCOUNT_ID: ${{ steps.run_tests.outputs.AWS_ACCOUNT_ID }}$
-      run: aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
+      run: aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin ${{env.AWS_ACCOUNT_ID}}.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
     - name: Deploy develop
       if: github.ref == 'refs/heads/develop'
       run: SLS_DEBUG="*" serverless deploy --region $AWS_REGION_NAME --stage dev --aws-profile 'default'
