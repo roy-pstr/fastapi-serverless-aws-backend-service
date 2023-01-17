@@ -71,7 +71,7 @@ jobs:
     - name: Install serverless plugins
       run: npm ci
     - name: Configure AWS account
-      id: account_id
+      id: config_aws
       run: |
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
@@ -79,14 +79,14 @@ jobs:
         echo AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text) >> $GITHUB_OUTPUT
     - name: AWS ECR Login
       env:
-        AWS_ACCOUNT_ID: ${{ steps.run_tests.outputs.AWS_ACCOUNT_ID }}$
+        AWS_ACCOUNT_ID: ${{ steps.config_aws.outputs.AWS_ACCOUNT_ID }}
       run: aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin ${{env.AWS_ACCOUNT_ID}}.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
     - name: Deploy develop
       if: github.ref == 'refs/heads/develop'
       run: SLS_DEBUG="*" serverless deploy --region $AWS_REGION_NAME --stage dev --aws-profile 'default'
-    - name: Deploy develop
+    - name: Deploy staging
       if: github.ref == 'refs/heads/staging'
       run: echo "serverless deploy --stage=staging"
-    - name: Deploy develop
+    - name: Deploy production
       if: github.ref == 'refs/heads/main'
       run: echo "serverless deploy --stage=prod"
