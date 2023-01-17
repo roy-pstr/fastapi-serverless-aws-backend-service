@@ -6,14 +6,16 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-20.04
-
+    env:
+      POETRY_VERSION: 1.2.0b3
+      PYTHON_VERSION: 3.9
     steps:
     - uses: actions/checkout@v3
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: ${{ env.PYTHON_VERSION }}
         
     - name: Cache Poetry installation
       id: cached-poetry
@@ -26,7 +28,7 @@ jobs:
       if: steps.cached-poetry.outputs.cache-hit != 'true'
       uses: snok/install-poetry@v1
       with:
-        version: 1.2.0b3
+        version: ${{ env.POETRY_VERSION }}
         virtualenvs-in-project: true
         installer-parallel: true
 
