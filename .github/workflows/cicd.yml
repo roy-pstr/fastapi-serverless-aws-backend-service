@@ -61,32 +61,6 @@ jobs:
       AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.9
-    - name: Cache Poetry installation
-      id: cached-poetry
-      uses: actions/cache@v3
-      with:
-        path: ~/.local  # the path depends on the OS
-        key: poetry-cache-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.POETRY_VERSION }}
-    - name: Install Poetry
-      if: steps.cached-poetry.outputs.cache-hit != 'true'
-      uses: snok/install-poetry@v1
-      with:
-        version: 1.2.0b3
-        virtualenvs-in-project: true
-        installer-parallel: true
-    - name: Load cached venv
-      id: cached-poetry-dependencies
-      uses: actions/cache@v3
-      with:
-        path: .venv
-        key: venv-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('**/poetry.lock') }}-only-main
-    - name: Install python dependencies
-      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      run: poetry install --no-interaction --no-ansi --no-root --only main
     - name: Install NodeJS for serverless framework
       uses: actions/setup-node@v3
       with:
