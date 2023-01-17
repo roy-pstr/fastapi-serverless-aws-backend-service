@@ -55,7 +55,10 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-20.04
-
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.9
@@ -93,9 +96,20 @@ jobs:
       run: npm i -g serverless
     - name: Install serverless plugins
       run: npm ci
+    - name: Configure AWS account
+      id: account_id
+      run: |
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        aws configure set region $AWS_REGION_NAME
+        aws sts get-caller-identity --query "Account" --output text >> $GITHUB_OUTPUT
+    - name: AWS ECR Login
+      env:
+        AWS_ACCOUNT_ID: ${{ steps.run_tests.outputs.0 }}$
+      run: aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
     - name: Deploy develop
       if: github.ref == 'refs/heads/develop'
-      run: echo "serverless deploy --stage=dev"
+      run: SLS_DEBUG="*" serverless deploy --region $AWS_REGION_NAME --stage dev --aws-profile 'default'
     - name: Deploy develop
       if: github.ref == 'refs/heads/staging'
       run: echo "serverless deploy --stage=staging"
