@@ -1,11 +1,6 @@
 name: CI/CD
 
-on:
-  push:
-    branches: 
-        - develop
-        - staging
-        - master
+on: push
 
 
 jobs:
@@ -61,6 +56,7 @@ jobs:
       AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       SERVERLESS_VERSION: 3.26.0
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/develop'
     steps:
     - name: Set env STAGE
       run: |
@@ -69,7 +65,7 @@ jobs:
             echo "STAGE=dev" >> "$GITHUB_ENV"
         elif [[ $GITHUB_REF == 'staging' && $GITHUB_EVENT_NAME == 'push' ]]; then
             echo "STAGE=staging" >> "$GITHUB_ENV"
-        elif [[ $GITHUB_REF == 'main' && $GITHUB_EVENT_NAME == 'push' ]]; then
+        elif [[ $GITHUB_REF == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
             echo "STAGE=prod" >> "$GITHUB_ENV"
         else
             echo "STAGE=dev" >> "$GITHUB_ENV"
