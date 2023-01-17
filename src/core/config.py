@@ -1,5 +1,6 @@
 from functools import lru_cache
 from typing import List
+from typing import Literal
 
 from pydantic import BaseSettings
 
@@ -8,6 +9,8 @@ class Settings(BaseSettings):
     """
     Settings for the FastAPI server.
     """
+
+    STAGE: Literal["dev", "staging", "prod"] = "dev"
 
     LOGGER_LEVEL: str = "INFO"
 

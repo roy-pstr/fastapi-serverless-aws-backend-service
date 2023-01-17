@@ -11,8 +11,11 @@ from src.api.exceptions import router as exceptions_router
 from src.api.health import router as health_router
 from src.api.v1.app import app as app_v1
 from src.api.v2.app import app as app_v2
+from src.core.config import get_settings
 from src.core.middleware import handle_unhandled_exceptions
 
+
+settings = get_settings()
 
 # fix the import path when the script is being called from pytest.
 rootDir = Path(__file__).resolve().parent
@@ -47,15 +50,11 @@ async def root():
     Get / endpoint
     """
     running_on_aws_lambda = os.environ.get("AWS_EXECUTION_ENV") is not None
-    message = "Hello from your backend service"
-    if running_on_aws_lambda:
-        message += " running on AWS Lambda!"
-    else:
-        message += " running on your local machine!"
     return {
-        "message": message,
+        "message": "Hello from your backend service",
+        "stage": settings.STAGE,
+        "machine": "AWS Lambda" if running_on_aws_lambda else "local machine",
     }
-
 
 # This is a wrapper for the FastAPI app that is used by AWS Lambda
 handler = Mangum(app)
