@@ -105,7 +105,7 @@ jobs:
         aws sts get-caller-identity --query "Account" --output text >> $GITHUB_OUTPUT
     - name: AWS ECR Login
       env:
-        AWS_ACCOUNT_ID: ${{ steps.run_tests.outputs.0 }}$
+        AWS_ACCOUNT_ID: ${{ steps.run_tests.outputs[0] }}$
       run: aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
     - name: Deploy develop
       if: github.ref == 'refs/heads/develop'
