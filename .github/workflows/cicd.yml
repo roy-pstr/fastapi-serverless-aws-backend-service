@@ -95,4 +95,10 @@ jobs:
       run: npm ci
     - name: Deploy develop
       if: github.ref == 'refs/heads/develop'
-      run: echo "serverless deploy --stage=${GITHUB_HEAD_REF}"
+      run: echo "serverless deploy --stage=dev"
+    - name: Deploy develop
+      if: github.ref == 'refs/heads/staging'
+      run: echo "serverless deploy --stage=staging"
+    - name: Deploy develop
+      if: github.ref == 'refs/heads/main'
+      run: echo "serverless deploy --stage=prod"
