@@ -60,7 +60,22 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      SERVERLESS_VERSION: 3.26.0
     steps:
+    - name: Set env STAGE
+      run: |
+        echo $GITHUB_REF
+        if [[ $GITHUB_REF == 'develop' && $GITHUB_EVENT_NAME == 'push' ]]; then
+            echo "STAGE=dev" >> "$GITHUB_ENV"
+        elif [[ $GITHUB_REF == 'staging' && $GITHUB_EVENT_NAME == 'push' ]]; then
+            echo "STAGE=staging" >> "$GITHUB_ENV"
+        elif [[ $GITHUB_REF == 'main' && $GITHUB_EVENT_NAME == 'push' ]]; then
+            echo "STAGE=prod" >> "$GITHUB_ENV"
+        else
+            echo "STAGE=dev" >> "$GITHUB_ENV"
+        fi
+    - name: Test env STAGE
+      run: echo ${{ env.STAGE }}
     - uses: actions/checkout@v3
     - name: Install NodeJS for serverless framework
       uses: actions/setup-node@v3
@@ -72,10 +87,10 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.npm  # the path depends on the OS
-        key: serverless-cache-${{ runner.os }}
+        key: serverless-cache-${{ runner.os }}-version-${{ env.SERVERLESS_VERSION }}
     - name: Install serverless framework
       if: steps.cached-serverless.outputs.cache-hit != 'true'
-      run: npm i -g serverless
+      run: npm i -g serverless@${{env.SERVERLESS_VERSION}}
     - name: Install serverless plugins
       run: npm ci
     - name: Configure AWS account
@@ -85,7 +100,9 @@ jobs:
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set region $AWS_REGION_NAME
     - name: AWS ECR Login
-      run: aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
+      run: |
+        aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
+        docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com/serverless-fastapibackendservice-${self:provider.stage}:fastapi-backend-server || true
     - name: Deploy develop
       if: github.ref == 'refs/heads/develop'
       run: SLS_DEBUG="*" serverless deploy --region $AWS_REGION_NAME --stage dev --aws-profile 'default'
