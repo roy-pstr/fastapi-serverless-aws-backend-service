@@ -56,5 +56,6 @@ async def root():
         "machine": "AWS Lambda" if running_on_aws_lambda else "local machine",
     }
 
+
 # This is a wrapper for the FastAPI app that is used by AWS Lambda
 handler = Mangum(app)
