@@ -1,32 +1,31 @@
 # FastAPI Serverless AWS Backend Server
-Welcome to the FastAPI Serverless AWS Backend Server project! This project is designed to provide a quick and easy way to get started with building a production ready backend server using the FastAPI web framework deployed on AWS lambda.
+This project act as a template for a FastAPI server deployed on AWS Lambda for production use.
 
-## Bottom Line
-### Deployments
-What | How (script) | Where (endpoint)
---- | --- | --- 
-**Local** | `./scripts/start` | `http://localhost:8000`
-**Remote**|`./scripts/deploy`|`https://***.execute-api.eu-central-1.amazonaws.com/dev/`
-**Develop Domain**|`./scripts/create-domain`+`./scripts/deploy`|`https://api-develop.your.domain`
-**Staging Domain**|`./scripts/create-domain staging`+`./scripts/deploy staging`|`https://api-staging.your.domain`
-**Production Domain**|`./scripts/create-domain prod`+`./scripts/deploy prod`|`https://api.your.domain`
-### Test
-`curl --request GET "https://api-develop.larium.ai"` -> `{"message":"Hello from your backend service running on AWS Lambda!"}`
 
 ## Features
-- Built with FastAPI, a modern, fast, and easy-to-use web framework for building APIs with Python
-- Highly scalable and cost-effective hosting on AWS Lambda ([defualt limit](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html) is a total 1,000 concurrency across all functions in a region per account)
-- Easy to deploy with the serverless framework
-- Code quality ensured with static analysis tools Black, Mypy, iSort, Autoflake and Pylint
-- Domain management per deployment stage - just provide a AWS Certificate ARN for your base domain
-- Built-in monitoring with AWS CloudWatch for logs aggregation and AWS XRay for tracing
-
+- Project structure template
+- FastAPI boilar plate code:
+  - Root application with versioning API (currently V1 and V2 are defined).
+  - Middleware for CORS, exceptions and logging
+  - Config module with settings loaded from your `.env` file
+  - Python logger is configered to dump all FastAPI native logs also when running on AWS lambda
+  - Test suite setup with TestClient
+  - Health check route and exceptions routes
+ - Python code quality tools already setup both locally and aspart of the CI (Pylint, Black, Isort, MyPy)
+ - Dockerfile with AWS lambda base image for the FastAPI service conatiner.
+ - Poetry for python enviornment managment.
+ - Serverless.yml boilar plate:
+   - Lambda function for the FastAPI backend service
+   - Lambda is conatiner-based and images are deployed to AWS ECR
+   - Defined cloud watch IAM roles and retention policy (30 days)
+   - Defined XRay IAM roles
+   - Custom domain management support in three sub-domains, one per stage.
+  - Scripts folder so you can easily run it all
+   
 ## Future Features
-- Support in caching using FastAPI_Cache
+- Boilar plate code for caching using FastAPI_Cache
 - Basic authentication and authorization with Auth0
-- Multi-stage CI/CD deployment with GitHub Actions
 - Database migration support using Alembic
-- Handling exceptions and logging
 
 ## Prerequisites
 - An AWS account
@@ -77,6 +76,8 @@ chmod 777 ./scripts/*
 ```
 ./scripts/start
 ```
+Test it </br>
+`curl --request GET "https://localhost:8000"`
 
 8. (Optional) If you want to use a custom domain for the backend, follow these steps:
 - Obtain an ARN of AWS Certificate for your domain in the AWS Certificate Manager
@@ -93,6 +94,8 @@ chmod 777 ./scripts/*
 ```
 ./scripts/deploy
 ```
+Test it </br>
+`curl --request GET "https://<YOUR_AWS_ACCOUNT_ID>.execute-api.eu-central-1.amazonaws.com/dev/"`
 
 10. Remove deployment from AWS
 ```
@@ -104,6 +107,14 @@ chmod 777 ./scripts/*
 ./scripts/delete-domain
 ```
 
+## Enviorenments
+What | How (script) | Where (endpoint)
+--- | --- | --- 
+**Local** | `./scripts/start` | `http://localhost:8000`
+**Remote**|`./scripts/deploy`|`https://***.execute-api.eu-central-1.amazonaws.com/dev/`
+**Develop Domain**|`./scripts/create-domain`</br>`./scripts/deploy`|`https://api-develop.your.domain`
+**Staging Domain**|`./scripts/create-domain staging`</br>`./scripts/deploy staging`|`https://api-staging.your.domain`
+**Production Domain**|`./scripts/create-domain prod`</br>`./scripts/deploy prod`|`https://api.your.domain`
 
 ## Contributing
 We welcome contributions to this project! If you have an idea for a new feature or improvement, please open an issue or pull request.
