@@ -60,13 +60,15 @@ jobs:
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/develop'
     steps:
     - name: Set env STAGE
+      env:
+        BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
       run: |
-        echo $GITHUB_REF
-        if [[ $GITHUB_REF == 'develop' && $GITHUB_EVENT_NAME == 'push' ]]; then
+        echo $BRANCH_NAME
+        if [[ $BRANCH_NAME == 'develop' ]]; then
             echo "STAGE=dev" >> "$GITHUB_ENV"
-        elif [[ $GITHUB_REF == 'staging' && $GITHUB_EVENT_NAME == 'push' ]]; then
+        elif [[ $BRANCH_NAME == 'staging' ]]; then
             echo "STAGE=staging" >> "$GITHUB_ENV"
-        elif [[ $GITHUB_REF == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
+        elif [[ $BRANCH_NAME == 'master' ]]; then
             echo "STAGE=prod" >> "$GITHUB_ENV"
         else
             echo "STAGE=dev" >> "$GITHUB_ENV"
