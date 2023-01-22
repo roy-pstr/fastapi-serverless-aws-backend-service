@@ -5,9 +5,7 @@ from src.core.config import get_settings
 
 settings = get_settings()
 
-# Turn off default uvicorn logging
-uvicorn_error = logging.getLogger("uvicorn.error")
-uvicorn_error.disabled = True
+# Disable uvicorn access logger
 uvicorn_access = logging.getLogger("uvicorn.access")
 uvicorn_access.disabled = True
 
