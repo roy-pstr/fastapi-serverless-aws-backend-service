@@ -1,24 +1,20 @@
 name: CI/CD
 
-on:
-  push:
-    branches: 
-        - develop
-        - staging
-        - master
-
+on: push
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-20.04
-
+    env:
+      POETRY_VERSION: 1.2.0b3
+      PYTHON_VERSION: 3.9
     steps:
     - uses: actions/checkout@v3
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: ${{ env.PYTHON_VERSION }}
         
     - name: Cache Poetry installation
       id: cached-poetry
@@ -31,7 +27,7 @@ jobs:
       if: steps.cached-poetry.outputs.cache-hit != 'true'
       uses: snok/install-poetry@v1
       with:
-        version: 1.2.0b3
+        version: ${{ env.POETRY_VERSION }}
         virtualenvs-in-project: true
         installer-parallel: true
 
@@ -46,20 +42,63 @@ jobs:
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       run: poetry install --no-interaction --no-root
       
-    - name: Test
+    - name: Code Quality (iSort, PyLint, MyPy, Black)
+      run: ./scripts/check
+
+    - name: Tests
       run: poetry run pytest
 
+  deploy:
+    needs: test
+    runs-on: ubuntu-20.04
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      SERVERLESS_VERSION: 3.26.0
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/develop'
+    steps:
+    - name: Set env STAGE
+      run: |
+        echo $GITHUB_REF
+        if [[ $GITHUB_REF == 'develop' && $GITHUB_EVENT_NAME == 'push' ]]; then
+            echo "STAGE=dev" >> "$GITHUB_ENV"
+        elif [[ $GITHUB_REF == 'staging' && $GITHUB_EVENT_NAME == 'push' ]]; then
+            echo "STAGE=staging" >> "$GITHUB_ENV"
+        elif [[ $GITHUB_REF == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
+            echo "STAGE=prod" >> "$GITHUB_ENV"
+        else
+            echo "STAGE=dev" >> "$GITHUB_ENV"
+        fi
+    - uses: actions/checkout@v3
     - name: Install NodeJS for serverless framework
       uses: actions/setup-node@v3
       with:
         node-version: '14.x'
-      
+        cache: 'npm'
+    # - name: Cache global serverless installation
+    #   id: cached-serverless
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: ~/node_modules # the path depends on the OS
+    #     key: serverless-cache-${{ runner.os }}-version-${{ env.SERVERLESS_VERSION }}
     - name: Install serverless framework
-      run: npm i -g serverless
-
+      # if: steps.cached-serverless.outputs.cache-hit != 'true'
+      run: |
+        npm i -g serverless@${{env.SERVERLESS_VERSION}}
+        which serverless
     - name: Install serverless plugins
       run: npm ci
-
+    - name: Configure AWS account
+      id: config_aws
+      run: |
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        aws configure set region $AWS_REGION_NAME
+    - name: AWS ECR Login
+      run: |
+        aws ecr get-login-password --region $AWS_REGION_NAME | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com
+        docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION_NAME.amazonaws.com/serverless-fastapibackendservice-${{ env.STAGE }}:fastapi-backend-server || true
     - name: Deploy
-      run: echo "Deploy your service here!"
-      # run: serverless deploy
+      run: SLS_DEBUG="*" serverless deploy --region $AWS_REGION_NAME --stage ${{ env.STAGE }} --aws-profile 'default'

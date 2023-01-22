@@ -1,5 +1,6 @@
 from functools import lru_cache
 from typing import List
+from typing import Literal
 
 from pydantic import BaseSettings
 
@@ -9,11 +10,13 @@ class Settings(BaseSettings):
     Settings for the FastAPI server.
     """
 
+    STAGE: Literal["dev", "staging", "prod"] = "dev"
+
     LOGGER_LEVEL: str = "INFO"
 
     ALLOWED_HOSTS: List[str] = ["*"]
 
-    class Config:
+    class Config:  # pylint: disable=too-few-public-methods
         """
         Tell BaseSettings the env file path
         """

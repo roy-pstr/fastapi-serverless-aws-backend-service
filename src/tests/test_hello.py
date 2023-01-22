@@ -7,6 +7,4 @@ def test_root_route(client: TestClient) -> None:
     """
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {
-        "message": "Hello from your backend service running on your local machine!",
-    }
+    assert response.json() == {"message": "Hello from your backend service", "stage": "dev", "machine": "local machine"}
