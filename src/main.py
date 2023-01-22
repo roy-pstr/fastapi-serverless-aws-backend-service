@@ -55,11 +55,10 @@ async def root():
     """
     Get / endpoint
     """
-    running_on_aws_lambda = os.environ.get("AWS_EXECUTION_ENV") is not None
     return {
         "message": "Hello from your backend service",
         "stage": settings.STAGE,
-        "machine": "AWS Lambda" if running_on_aws_lambda else "local machine",
+        "machine": "AWS Lambda" if settings.RUNNING_ON_AWS_LAMBDA else "local machine",
     }
 
 
