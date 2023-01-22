@@ -1,7 +1,6 @@
-import http, json, sys, time, traceback
+import http, time
 
 from fastapi import Request
-from fastapi.responses import PlainTextResponse
 
 from src.core.logger import logger
 

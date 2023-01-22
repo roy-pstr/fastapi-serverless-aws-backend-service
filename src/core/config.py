@@ -1,4 +1,5 @@
 import os
+
 from functools import lru_cache
 from typing import List
 from typing import Literal
@@ -12,7 +13,7 @@ class Settings(BaseSettings):
     """
 
     RUNNING_ON_AWS_LAMBDA: bool = os.environ.get("AWS_EXECUTION_ENV") is not None
-    
+
     STAGE: Literal["dev", "staging", "prod"] = "dev"
 
     LOGGER_LEVEL: str = "INFO"

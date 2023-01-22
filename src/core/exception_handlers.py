@@ -3,19 +3,22 @@ import sys
 from typing import Union
 
 from fastapi import Request
-from fastapi.exceptions import RequestValidationError, HTTPException
 from fastapi.exception_handlers import http_exception_handler as _http_exception_handler
 from fastapi.exception_handlers import (
     request_validation_exception_handler as _request_validation_exception_handler,
 )
+from fastapi.exceptions import HTTPException
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.responses import PlainTextResponse
 from fastapi.responses import Response
 
-from src.core.logger import logger
 from src.core.config import get_settings
+from src.core.logger import logger
+
 
 settings = get_settings()
+
 
 async def request_validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
     """
@@ -50,9 +53,5 @@ async def unhandled_exception_handler(request: Request, exc: Exception) -> Plain
     url = f"{request.url.path}?{request.query_params}" if request.query_params else request.url.path
     exception_type, exception_value, exception_traceback = sys.exc_info()
     exception_name = getattr(exception_type, "__name__", None)
-    logger.error(
-        f'{host}:{port} - "{request.method} {url}" 500 Internal Server Error <{exception_name}: {exception_value}>'
-    )
+    logger.error(f'{host}:{port} - "{request.method} {url}" 500 Internal Server Error <{exception_name}: {exception_value}>')
     return PlainTextResponse(str(exc), status_code=500)
-
-
