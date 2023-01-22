@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 
     ALLOWED_HOSTS: List[str] = ["*"]
 
-    class Config:
+    class Config:  # pylint: disable=too-few-public-methods
         """
         Tell BaseSettings the env file path
         """

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
+from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
-from starlette.exceptions import HTTPException as StarletteHTTPException
 
 
 router = APIRouter()
@@ -11,7 +11,7 @@ async def httpexception():
     """
     Example for HTTPException raised from inside the endpoint.
     """
-    raise StarletteHTTPException(
+    raise HTTPException(
         status_code=500,
         detail="StarletteHTTPException raised from inside the endpoint.",
     )
