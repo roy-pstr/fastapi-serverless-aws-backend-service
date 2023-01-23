@@ -95,7 +95,7 @@ Test it </br>
 ./scripts/deploy
 ```
 Test it </br>
-`curl --request GET "https://<YOUR_AWS_ACCOUNT_ID>.execute-api.eu-central-1.amazonaws.com/dev/"`
+`curl --request GET "https://<UNIQUE_ID>.execute-api.<AWS_REGION>.amazonaws.com/dev/"`
 
 10. Remove deployment from AWS
 ```
@@ -111,7 +111,7 @@ Test it </br>
 What | How (script) | Where (endpoint)
 --- | --- | --- 
 **Local** | `./scripts/start` | `http://localhost:8000`
-**Remote**|`./scripts/deploy`|`https://***.execute-api.eu-central-1.amazonaws.com/dev/`
+**Remote**|`./scripts/deploy`|`https://***.execute-api.<AWS_REGION>.amazonaws.com/dev/`
 **Develop Domain**|`./scripts/create-domain`</br>`./scripts/deploy`|`https://api-develop.your.domain`
 **Staging Domain**|`./scripts/create-domain staging`</br>`./scripts/deploy staging`|`https://api-staging.your.domain`
 **Production Domain**|`./scripts/create-domain prod`</br>`./scripts/deploy prod`|`https://api.your.domain`
