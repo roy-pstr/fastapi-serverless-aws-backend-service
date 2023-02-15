@@ -11,6 +11,7 @@ from src.core.config import get_settings
 from src.core.exception_handlers import http_exception_handler
 from src.core.exception_handlers import request_validation_exception_handler
 from src.core.exception_handlers import unhandled_exception_handler
+from src.core.logger import configure_logging
 from src.core.middleware import log_request_middleware
 
 
@@ -21,17 +22,23 @@ def create_application() -> FastAPI:
     """
     Create the FastAPI application
     """
+    # configure logging
+    configure_logging(disable_uvicorn_access_logger=True)
+
+    # create the FastAPI application
     application = FastAPI(docs_url=None)  # hide docs
 
     # add routers
     application.include_router(health_router, prefix="/ping", tags=["ping"])
     application.include_router(exceptions_router, prefix="/exceptions", tags=["exceptions"])
 
+    # add exception handlers and middleware
     application.middleware("http")(log_request_middleware)
     application.add_exception_handler(RequestValidationError, request_validation_exception_handler)
     application.add_exception_handler(HTTPException, http_exception_handler)
     application.add_exception_handler(Exception, unhandled_exception_handler)
-    # mount sub-apps
+
+    # mount sub-apps (those used for versioning)
     application.mount("/v1", app_v1)
     application.mount("/v2", app_v2)
 
