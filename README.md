@@ -5,15 +5,15 @@ This project act as a template for a FastAPI server deployed on AWS Lambda for p
 ## Features
 - Project structure template
 - FastAPI boilar plate code:
-  - Root application with versioning API (currently V1 and V2 are defined).
+  - Root application with versioning API (currently V1 and V2 are defined)
   - Middleware for CORS, exceptions and logging
   - Config module with settings loaded from your `.env` file
-  - Python logger is configered to dump all FastAPI native logs also when running on AWS lambda
+  - Logs are working also in production envionment (AWS Lambda)
   - Test suite setup with TestClient
   - Health check route and exceptions routes
  - Python code quality tools already setup both locally and aspart of the CI (Pylint, Black, Isort, MyPy)
- - Dockerfile with AWS lambda base image for the FastAPI service conatiner.
- - Poetry for python enviornment managment.
+ - Dockerfile with AWS lambda base image for the FastAPI service conatiner
+ - Poetry for python enviornment managment
  - Serverless.yml boilar plate:
    - Lambda function for the FastAPI backend service
    - Lambda is conatiner-based and images are deployed to AWS ECR
@@ -95,7 +95,7 @@ Test it </br>
 ./scripts/deploy
 ```
 Test it </br>
-`curl --request GET "https://<YOUR_AWS_ACCOUNT_ID>.execute-api.eu-central-1.amazonaws.com/dev/"`
+`curl --request GET "https://<UNIQUE_ID>.execute-api.<AWS_REGION>.amazonaws.com/dev/"`
 
 10. Remove deployment from AWS
 ```
@@ -111,7 +111,7 @@ Test it </br>
 What | How (script) | Where (endpoint)
 --- | --- | --- 
 **Local** | `./scripts/start` | `http://localhost:8000`
-**Remote**|`./scripts/deploy`|`https://***.execute-api.eu-central-1.amazonaws.com/dev/`
+**Remote**|`./scripts/deploy`|`https://***.execute-api.<AWS_REGION>.amazonaws.com/dev/`
 **Develop Domain**|`./scripts/create-domain`</br>`./scripts/deploy`|`https://api-develop.your.domain`
 **Staging Domain**|`./scripts/create-domain staging`</br>`./scripts/deploy staging`|`https://api-staging.your.domain`
 **Production Domain**|`./scripts/create-domain prod`</br>`./scripts/deploy prod`|`https://api.your.domain`
