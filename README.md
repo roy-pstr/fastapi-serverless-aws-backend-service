@@ -1,4 +1,9 @@
+<p align="center">
+<img src="assets/sls_lambda_fastapi.png" data-canonical-src="assets/sls_lambda_fastapi.png" width=400/>
+</p>
+
 # FastAPI Serverless AWS Backend Server
+
 This project act as a template for a FastAPI server deployed on AWS Lambda for production use.
 
 
