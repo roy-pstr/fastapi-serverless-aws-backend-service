@@ -1,6 +1,3 @@
-from pathlib import Path
-from sys import path
-
 from fastapi import FastAPI
 from fastapi.exceptions import HTTPException
 from fastapi.exceptions import RequestValidationError
@@ -18,10 +15,6 @@ from src.core.middleware import log_request_middleware
 
 
 settings = get_settings()
-
-# fix the import path when the script is being called from pytest.
-rootDir = Path(__file__).resolve().parent
-path.append(str(rootDir))
 
 
 def create_application() -> FastAPI:
