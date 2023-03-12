@@ -8,26 +8,26 @@ This project act as a template for a FastAPI server deployed on AWS Lambda for p
 
 ## Features
 - Project structure template
-- FastAPI boilar plate code:
+- FastAPI boiler plate code:
   - Root application with versioning API (currently V1 and V2 are defined)
   - Middleware for CORS, exceptions and logging
   - Config module with settings loaded from your `.env` file
-  - Logs are working also in production envionment (AWS Lambda)
+  - Logs are working also in production environment (AWS Lambda)
   - Test suite setup with TestClient
   - Health check route and exceptions routes
- - Python code quality tools already setup both locally and aspart of the CI (Pylint, Black, Isort, MyPy)
- - Dockerfile with AWS lambda base image for the FastAPI service conatiner
- - Poetry for python enviornment managment
- - Serverless.yml boilar plate:
+ - Python code quality tools already setup both locally and as part of the CI (Pylint, Black, Isort, MyPy)
+ - Dockerfile with AWS lambda base image for the FastAPI service container
+ - Poetry for python environment management
+ - Serverless.yml boiler plate:
    - Lambda function for the FastAPI backend service
-   - Lambda is conatiner-based and images are deployed to AWS ECR
+   - Lambda is container-based and images are deployed to AWS ECR
    - Defined cloud watch IAM roles and retention policy (30 days)
    - Defined XRay IAM roles
    - Custom domain management support in three sub-domains, one per stage.
   - Scripts folder so you can easily run it all
    
 ## Future Features
-- Boilar plate code for caching using FastAPI_Cache
+- boiler plate code for caching using FastAPI_Cache
 - Basic authentication and authorization with Auth0
 - Database migration support using Alembic
 
@@ -36,7 +36,7 @@ This project act as a template for a FastAPI server deployed on AWS Lambda for p
 - The [AWS CLI](https://aws.amazon.com/cli/) installed and configured
 - [Python 3.7.2 or later](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/) for managing dependencies and packaging the app
-- [npm](https://www.npmjs.com/) for installing the serverless framework and plugings
+- [npm](https://www.npmjs.com/) for installing the serverless framework and plugins
 - [serverless](https://www.serverless.com/) framework for deploying the backend (just run `npm install -g serverless`)
 - [Docker](https://www.docker.com/) for building and testing the app locally
 - (Optional) An AWS Certificate of SSL/TLS certificate for a domain name in the AWS Certificate Manager ([this guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains-prerequisites.html) can help)
@@ -111,7 +111,7 @@ Test it </br>
 ./scripts/delete-domain
 ```
 
-## Enviorenments
+## Environments
 What | How (script) | Where (endpoint)
 --- | --- | --- 
 **Local** | `./scripts/start` | `http://localhost:8000`
