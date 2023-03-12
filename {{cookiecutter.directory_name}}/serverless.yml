@@ -1,4 +1,4 @@
-service: FastAPIBackendService
+service: {{cookiecutter.service_name}}
 
 useDotenv: true # If set to 'true', environment variables will be automatically loaded from .env files
 
@@ -12,7 +12,7 @@ plugins:
   - serverless-plugin-log-retention
 
 custom:
-  baseDomain: your.domain
+  baseDomain: {{cookiecutter.base_domain}}
   dev:
     domainNameCondition: api-develop.${self:custom.baseDomain}
   staging:
@@ -32,7 +32,7 @@ custom:
     apiType: rest
     autoDomain: false
 
-  logRetentionInDays: 30 # This is to make sure that your cloudwatch log storage will stay in a reasonable size (it can get pretty expensive...)
+  logRetentionInDays: {{cookiecutter.log_retention_in_days}} # This is to make sure that your cloudwatch log storage will stay in a reasonable size (it can get pretty expensive...)
 
 provider:
   name: aws
@@ -53,13 +53,13 @@ provider:
   ecr:
     # In this section you can define images that will be built locally and uploaded to ECR
     images:
-      fastapi-backend-server:
+      {{cookiecutter.lambda_docker_image_tag}}:
         path: .
         # Dockerfile that will be used when building the image locally (default: 'Dockerfile'), relative to path defined above
         file: Dockerfile
         cacheFrom:
           # This is the path where the serverless framework will put the image in ECR when created for the first time.
-          - ${AWS::AccountId}.dkr.ecr.${self:provider.region}.amazonaws.com/serverless-fastapibackendservice-${self:provider.stage}:fastapi-backend-server
+          - ${AWS::AccountId}.dkr.ecr.${self:provider.region}.amazonaws.com/{{cookiecutter.ecr_repository_base_name}}-${self:provider.stage}:{{cookiecutter.lambda_docker_image_tag}}
   iamRoleStatements:  # handles the permissions of the lambda
     # XRay
     - Effect: Allow
@@ -80,7 +80,7 @@ provider:
 functions:
   app:
     image:
-      name: fastapi-backend-server
+      name: {{cookiecutter.lambda_docker_image_tag}}
     environment:
       STAGE: ${self:provider.stage}
 

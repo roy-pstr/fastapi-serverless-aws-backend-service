@@ -1,0 +1,10 @@
+{
+    "project_name": "FastAPI Serverless AWS Backend Service",
+    "directory_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+    "project_description":  "This project act as a template for a FastAPI server deployed on AWS Lambda for production use.",
+    "service_name": "{{ cookiecutter.project_name|replace(' ', '') }}",
+    "base_domain": "your.domain",
+    "ecr_repository_base_name": "{{ cookiecutter.directory_name }}",
+    "lambda_docker_image_tag": "{{ cookiecutter.directory_name }}",
+    "log_retention_in_days": "30"
+}

@@ -8,26 +8,26 @@ This project act as a template for a FastAPI server deployed on AWS Lambda for p
 
 ## Features
 - Project structure template
-- FastAPI boilar plate code:
+- FastAPI boiler plate code:
   - Root application with versioning API (currently V1 and V2 are defined)
   - Middleware for CORS, exceptions and logging
   - Config module with settings loaded from your `.env` file
-  - Logs are working also in production envionment (AWS Lambda)
+  - Logs are working also in production environment (AWS Lambda)
   - Test suite setup with TestClient
   - Health check route and exceptions routes
- - Python code quality tools already setup both locally and aspart of the CI (Pylint, Black, Isort, MyPy)
- - Dockerfile with AWS lambda base image for the FastAPI service conatiner
- - Poetry for python enviornment managment
- - Serverless.yml boilar plate:
+ - Python code quality tools already setup both locally and as part of the CI (Pylint, Black, Isort, MyPy)
+ - Dockerfile with AWS lambda base image for the FastAPI service container
+ - Poetry for python environment management
+ - Serverless.yml boiler plate:
    - Lambda function for the FastAPI backend service
-   - Lambda is conatiner-based and images are deployed to AWS ECR
+   - Lambda is container-based and images are deployed to AWS ECR
    - Defined cloud watch IAM roles and retention policy (30 days)
    - Defined XRay IAM roles
    - Custom domain management support in three sub-domains, one per stage.
   - Scripts folder so you can easily run it all
    
 ## Future Features
-- Boilar plate code for caching using FastAPI_Cache
+- Boiler plate code for caching using FastAPI_Cache
 - Basic authentication and authorization with Auth0
 - Database migration support using Alembic
 
@@ -36,22 +36,38 @@ This project act as a template for a FastAPI server deployed on AWS Lambda for p
 - The [AWS CLI](https://aws.amazon.com/cli/) installed and configured
 - [Python 3.7.2 or later](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/) for managing dependencies and packaging the app
-- [npm](https://www.npmjs.com/) for installing the serverless framework and plugings
+- [npm](https://www.npmjs.com/) for installing the serverless framework and plugins
 - [serverless](https://www.serverless.com/) framework for deploying the backend (just run `npm install -g serverless`)
 - [Docker](https://www.docker.com/) for building and testing the app locally
 - (Optional) An AWS Certificate of SSL/TLS certificate for a domain name in the AWS Certificate Manager ([this guide](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains-prerequisites.html) can help)
 
 ## Getting Started
-1. Clone the repository
+1. First, install cookiecutter if you don't already have it:
 ```
-git clone https://github.com/larium/fastapi-serverless-aws-backend.git
+python3 -m pip install cookiecutter
 ```
+Then, in the directory you want your project to be:
+```
+cookiecutter gh:roy-pstr/fastapi-serverless-aws-backend-service
+```
+You will be asked to put a few variables:
+<details><summary>Input Variables</summary>
+
+- project_name [default FastAPI Serverless AWS Backend Service]
+- directory_name [default fastapi-serverless-aws-backend-service] - this is your project directory
+- project_description
+- service_name [default FastAPIServerlessAWSBackendService] - this is your service name in AWS (see serverless.yml)
+- base_domain [default your.domain] - this is the base domain for any api url that will be deployed (only in case you will enable the domain deployment) (https://api.base_domain, https://api-dev.base_domain ... )
+- ecr_repository_base_name [default fastapi-serverless-aws-backend-service]
+- lambda_docker_image_tag [default fastapi-serverless-aws-backend-service]
+- log_retention_in_days [default 30] - This is the retention for the cloud watch logs in AWS
+
+</details>
 
 2. Install the dependencies
 ```
-cd fastapi-serverless-aws-backend
-npm install
-poetry install
+cd {{directory_name}}
+make install
 ```
 
 3. Set up local environment in `.env` file
@@ -68,17 +84,17 @@ chmod 777 ./scripts/*
 
 5. Run local code analysis
 ```
-./scripts/check
+make check
 ```
 
 6. Run local tests
 ```
-./scripts/test
+make test
 ```
 
 7. Run local server
 ```
-./scripts/start
+make start
 ```
 Test it </br>
 `curl --request GET "https://localhost:8000"`
@@ -96,14 +112,14 @@ Test it </br>
 
 9. Deploy to AWS
 ```
-./scripts/deploy
+make deploy
 ```
 Test it </br>
 `curl --request GET "https://<UNIQUE_ID>.execute-api.<AWS_REGION>.amazonaws.com/dev/"`
 
 10. Remove deployment from AWS
 ```
-./scripts/remove
+make remove
 ```
 
 11. (Optional) Remove the domain from Route53 (it will not remove the certificate!)
@@ -111,7 +127,7 @@ Test it </br>
 ./scripts/delete-domain
 ```
 
-## Enviorenments
+## Environments
 What | How (script) | Where (endpoint)
 --- | --- | --- 
 **Local** | `./scripts/start` | `http://localhost:8000`

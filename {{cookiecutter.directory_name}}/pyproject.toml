@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "fastapi-serverless-aws-backend-service"
+name = "{{cookiecutter.project_name}}"
 version = "0.1.0"
-description = "This project act as a template for a FastAPI server deployed on AWS Lambda for production use."
+description = "{{cookiecutter.project_description}}"
 authors = ["Roy Pasternak <roy@larium.ai>"]
 license = "MIT"
 readme = "README.md"

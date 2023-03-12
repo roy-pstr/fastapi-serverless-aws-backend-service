@@ -1,5 +1,5 @@
 FROM public.ecr.aws/lambda/python:3.9
-ENV POETRY_VERSION=1.2.0b3
+ENV POETRY_VERSION="1.3.2"
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
 # Turns off buffering for easier container logging
